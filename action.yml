@@ -41,7 +41,8 @@ runs:
           local BRANCH_NAME="$2"
 
           gh api "repos/${GITHUB_REPOSITORY}/pulls?state=open" \
-            | jq --arg branch "$BRANCH_NAME" '.[] | select(.head.ref == $branch) | .number' \
+            | jq --arg branch "$BRANCH_NAME" --arg repo "$GITHUB_REPOSITORY" \
+                 '.[] | select(.head.ref == $branch and .head.repo.full_name == $repo) | .number' \
             | wc -l
         }
 

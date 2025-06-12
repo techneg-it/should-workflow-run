@@ -65,6 +65,14 @@ jobs:
           override: false
       - run: |
           [[ ${{ steps.test-pr.outputs.should-run }} == "false" ]]
+      - id: test-pr_from_fork_main
+        name: test-pr_from_fork_main
+        uses: ./
+        with:
+          branch-name: main
+          override: false
+      - run: |
+          [[ ${{ steps.test-pr_from_fork_main.outputs.should-run }} == "true" ]]
   results:
     name: Collect results
     permissions:
