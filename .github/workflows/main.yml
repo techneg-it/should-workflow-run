@@ -31,28 +31,17 @@ jobs:
     name: Test the action
     needs: should-run
     if: fromJSON(needs.should-run.outputs.should-run)
-<<<<<<< before updating
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - id: test-override-no_pr
-        name: test-override-no_pr
-=======
     runs-on: ubuntu-24.04
     timeout-minutes: 5
-    outputs:
-      value: ${{ steps.get-value.outputs.value }}
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - id: get-value
-        name: Run this action
->>>>>>> after updating
+      - id: test-override-no_pr
+        name: test-override-no_pr
         uses: ./
         with:
           branch-name: test-no_pr-DONOTREMOVE
           override: true
       - run: |
-<<<<<<< before updating
           [[ ${{ steps.test-override-no_pr.outputs.should-run }} == "true" ]]
       - id: test-override-pr
         name: test-override-pr
@@ -60,18 +49,6 @@ jobs:
         with:
           branch-name: test-pr-DONOTREMOVE
           override: true
-=======
-          echo "::notice ::Value: ${{ steps.get-value.outputs.value }}"
-  show-value:
-    name: Show value
-    needs:
-      - gv
-      - should-run
-    if: fromJSON(needs.should-run.outputs.should-run)
-    runs-on: ubuntu-24.04
-    timeout-minutes: 5
-    steps:
->>>>>>> after updating
       - run: |
           [[ ${{ steps.test-override-pr.outputs.should-run }} == "true" ]]
       - id: test-no_pr
